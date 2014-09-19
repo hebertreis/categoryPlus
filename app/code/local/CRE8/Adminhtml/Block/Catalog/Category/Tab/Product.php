@@ -115,10 +115,10 @@ class CRE8_Adminhtml_Block_Catalog_Category_Tab_Product extends Mage_Adminhtml_B
 			));
 		}
 		$this->addColumn('entity_id', array(
-			'header'   => Mage::helper('catalog')->__('ID'),
-			'sortable' => true,
-			'width'    => '60',
-			'index'    => 'entity_id',
+			'header' => Mage::helper('catalog')->__('ID'),
+			'width'  => '50px',
+			'type'   => 'number',
+			'index'  => 'entity_id',
 		));
 		$this->addColumn('name', array(
 			'header' => Mage::helper('catalog')->__('Name'),
