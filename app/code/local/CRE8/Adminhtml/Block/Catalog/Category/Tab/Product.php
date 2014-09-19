@@ -1,5 +1,67 @@
-<?php
-class CRE8_Adminhtml_Block_Catalog_Category_Tab_Product extends Mage_Adminhtml_Block_Catalog_Category_Tab_Product {
+	<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Mage
+ * @package     Mage_Adminhtml
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+
+/**
+ * Product in category grid
+ *
+ * @category   Mage
+ * @package    Mage_Adminhtml
+ * @author      Magento Core Team <core@magentocommerce.com>
+ */
+class CRE8_Adminhtml_Block_Catalog_Category_Tab_Product extends Mage_Adminhtml_Block_Widget_Grid {
+
+	public function __construct() {
+		parent::__construct();
+		$this->setId('catalog_category_products');
+		$this->setDefaultSort('entity_id');
+		$this->setUseAjax(true);
+	}
+
+	public function getCategory() {
+		return Mage::registry('category');
+	}
+
+	protected function _addColumnFilterToCollection($column) {
+		// Set custom filter for in category flag
+		if ($column->getId() == 'in_category') {
+			$productIds = $this->_getSelectedProducts();
+			if (empty($productIds)) {
+				$productIds = 0;
+			}
+			if ($column->getFilter()->getValue()) {
+				$this->getCollection()->addFieldToFilter('entity_id', array('in' => $productIds));
+			} elseif (!empty($productIds)) {
+				$this->getCollection()->addFieldToFilter('entity_id', array('nin' => $productIds));
+			}
+		} else {
+			parent::_addColumnFilterToCollection($column);
+		}
+		return $this;
+	}
+
 	protected function _prepareCollection() {
 		if ($this->getCategory()->getId()) {
 			$this->setDefaultFilter(array('in_category' => 1));
@@ -113,4 +175,18 @@ class CRE8_Adminhtml_Block_Catalog_Category_Tab_Product extends Mage_Adminhtml_B
 
 		return parent::_prepareColumns();
 	}
+
+	public function getGridUrl() {
+		return $this->getUrl('*/*/grid', array('_current' => true));
+	}
+
+	protected function _getSelectedProducts() {
+		$products = $this->getRequest()->getPost('selected_products');
+		if (is_null($products)) {
+			$products = $this->getCategory()->getProductsPosition();
+			return array_keys($products);
+		}
+		return $products;
+	}
+
 }
