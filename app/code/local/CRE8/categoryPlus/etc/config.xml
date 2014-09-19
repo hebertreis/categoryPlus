@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <CRE8_categoryPlus>
+            <version>0.0.1</version>
+        </CRE8_categoryPlus>
+    </modules>
+    <global>
+        <blocks>
+            <adminhtml>
+                <rewrite>
+                    <catalog_category_tab_product>CRE8_categoryPlus_Block_Catalog_Category_Tab_Product</catalog_category_tab_product><!-- override the default block with your ownw-->
+                </rewrite>
+            </adminhtml>
+        </blocks>
+    </global>
+</config>
