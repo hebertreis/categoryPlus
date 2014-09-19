@@ -1,5 +1,5 @@
 <?php
-class CRE8_categoryPlus_Block_Catalog_Category_Tab_Product extends Mage_Adminhtml_Block_Catalog_Category_Tab_Product {
+class CRE8_Adminhtml_Block_Catalog_Category_Tab_Product extends Mage_Adminhtml_Block_Catalog_Category_Tab_Product {
 	protected function _prepareCollection() {
 		if ($this->getCategory()->getId()) {
 			$this->setDefaultFilter(array('in_category' => 1));

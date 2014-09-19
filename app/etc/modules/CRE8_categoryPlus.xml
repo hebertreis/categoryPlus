@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-        <CRE8_categoryPlus>
+        <CRE8_Adminhtml>
             <active>true</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Adminhtml />
             </depends>
-        </CRE8_categoryPlus>
+        </CRE8_Adminhtml>
     </modules>
 </config>
